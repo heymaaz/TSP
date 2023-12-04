@@ -30,7 +30,7 @@ public class Main {
     //static final String INPUT_FILE_NAME = "C:\\Users\\mc2098\\eclipse-workspace\\Coursework 1\\src\\trainFiles/sample1-22.txt";
     //static final String INPUT_FILE_NAME = "C:\\Users\\mc2098\\eclipse-workspace\\Coursework 1\\src\\trainFiles/sample2-22.txt";
     //static final String INPUT_FILE_NAME = "C:\\Users\\mc2098\\eclipse-workspace\\Coursework 1\\src\\trainFiles/sample3-22.txt";
-    static final String INPUT_FILE_NAME = "C:\\Users\\mc2098\\eclipse-workspace\\Coursework 1\\src\\trainFiles/sample4-22.txt";
+    static final String INPUT_FILE_NAME = "src/trainFiles/sample4-22.txt";
     public static void main(String[] args) {
         long startTime = System.nanoTime();//Start time
         int[][] cities = input();//Get the cities from the file
