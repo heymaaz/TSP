@@ -1,6 +1,6 @@
 import java.util.Scanner;
 import java.io.File;
-public class Main {
+public class Main2 {
     /**
      * Author: Maaz Chowdhry
      * Student Number: M00910300
@@ -14,19 +14,22 @@ public class Main {
      * 3 5530 1424
      * 4 401 841
      */
-    //Initialize the variables to be used in the program (static so that they can be used in the methods)
-    static double[][] distanceMatrix;//For the adjacency matrix
+    //Initialize the variables to be used in the program (static so that they can be used in the methods) (final so that they cannot be changed)
+    static double[][] distanceMatrix;//For the adjacency matrix to store the distance between each city (to not have to calculate the distance between each city every time it is needed)
     static final int POWER_OF_TWO = 2;//For the x^2 y^2 in the distance formula
-    static final int POPULATION_SIZE = 100;//For the POPULATION_SIZE of the population
-    static final int CHECK_FOR_BIG_CITY=30;//For the city lenght to check if the algorithm should stop early
-    static final int TOP_IF_NOT_BEST = 5;//For the top 5 paths
-    static final int TOP_IF_BEST = 5;//For the top 20 paths
+    static final int POPULATION_SIZE = 100;//For the size of the population (number of paths)
+    static final int CHECK_FOR_BIG_CITY=30;//For the city lenght to check if the algorithm should stop early (if the city lenght is greater than 30)
+    static final int TOP_IF_NOT_BEST = 5;//For the number of paths to mutate if the path is the best path
+    static final int TOP_IF_BEST = 10;//For the number of paths to mutate if the path is not the best path
     static final int REINITIALISE_POPULATION_AT = 1000;//For the generation limit of 1000 to reinitialize the population and fitness every 1000 generations
-    static final int GENERATION_LIMIT_FOR_BIG_CITY = 100; //For the generation limit of 1,000 to stop the algorithm for city lenghts greater than 30
+    static final int GENERATION_LIMIT_FOR_BIG_CITY = 150; //For the generation limit to stop the algorithm for big cities (city lenght greater than 30)
     static final int GENERATION_LIMIT = 1000000;//For the generation limit of 1,000,000 to stop the algorithm
-    static final int NUMBER_OF_POPULATIONS = 5;//For the number of populations
+    static final int NUMBER_OF_POPULATIONS = 3;//For the number of populations
 
     //Uncomment the input file you want to run or add the path to the file you want to run
+    //static final String INPUT_FILE_NAME = "C:\\Users\\mc2098\\eclipse-workspace\\Coursework 1\\src\\trainFiles/train1.txt";
+    //static final String INPUT_FILE_NAME = "C:\\Users\\mc2098\\eclipse-workspace\\Coursework 1\\src\\trainFiles/train2.txt";
+    //static final String INPUT_FILE_NAME = "C:\\Users\\mc2098\\eclipse-workspace\\Coursework 1\\src\\trainFiles/train3.txt";
     //static final String INPUT_FILE_NAME = "C:\\Users\\mc2098\\eclipse-workspace\\Coursework 1\\src\\trainFiles/sample1-22.txt";
     //static final String INPUT_FILE_NAME = "C:\\Users\\mc2098\\eclipse-workspace\\Coursework 1\\src\\trainFiles/sample2-22.txt";
     //static final String INPUT_FILE_NAME = "C:\\Users\\mc2098\\eclipse-workspace\\Coursework 1\\src\\trainFiles/sample3-22.txt";
@@ -105,7 +108,6 @@ public class Main {
         for (int rowNum = 0; rowNum < population.length; rowNum++) {
             fitness[rowNum] = distance(population[rowNum]);
         }
-        sort(population, fitness);//Sort the population by fitness
         return fitness;
     }
     
@@ -201,13 +203,13 @@ public class Main {
                 }
             }
             displayGeneration(generation++,bestDistance,countOfAgreeingPopulations);//Display the generation, best distance, and number of agreeble contenders
-            if(lenghtFlag&&generation>GENERATION_LIMIT_FOR_BIG_CITY){//If the city length is greater than 30 and the generation is greater than 1000, stop the algorithm
+            if(lenghtFlag&&generation>GENERATION_LIMIT_FOR_BIG_CITY){//If the number of cities is big then stop the algorithm early
                 dontStop=false;
-                ifStop="Stopped because of generation limit of 1000 reached for city lenght:"+cities.length+".\n";
+                ifStop="Stopped because of generation limit of "+GENERATION_LIMIT_FOR_BIG_CITY+" reached for city lenght:"+cities.length+".\n";
             }
-            if(generation>GENERATION_LIMIT){//If the generation is greater than 1,000,000, stop the algorithm
+            if(generation>GENERATION_LIMIT){//If the generation is greater than GENERATION_LIMIT, stop the algorithm
                 dontStop=false;
-                ifStop="Stopped because of generation limit of 1,000,000 reached.\n";
+                ifStop="Stopped because of generation limit of "+GENERATION_LIMIT+" reached.\n";
             }
         }
         bestPath = population[min(fitness)][0];//Get the best path from the populations
