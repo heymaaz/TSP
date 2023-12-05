@@ -35,13 +35,13 @@ public class Main {
     static final boolean STOP_EARLY = false;//MAKE THIS TRUE FOR THE FOURTH TEST FILE
 
     //Uncomment the input file you want to run or add the path to the file you want to run
-    //static final String INPUT_FILE_NAME = "C:\\Users\\mc2098\\eclipse-workspace\\Coursework 1\\src\\trainFiles/train1.txt";
-    //static final String INPUT_FILE_NAME = "C:\\Users\\mc2098\\eclipse-workspace\\Coursework 1\\src\\trainFiles/train2.txt";
-    //static final String INPUT_FILE_NAME = "C:\\Users\\mc2098\\eclipse-workspace\\Coursework 1\\src\\trainFiles/train3.txt";
-    //static final String INPUT_FILE_NAME = "C:\\Users\\mc2098\\eclipse-workspace\\Coursework 1\\src\\trainFiles/sample1-22.txt";
-    //static final String INPUT_FILE_NAME = "C:\\Users\\mc2098\\eclipse-workspace\\Coursework 1\\src\\trainFiles/sample2-22.txt";
-    //static final String INPUT_FILE_NAME = "C:\\Users\\mc2098\\eclipse-workspace\\Coursework 1\\src\\trainFiles/sample3-22.txt";
-    static final String INPUT_FILE_NAME = "src/trainFiles/sample3-22.txt";
+    //static final String INPUT_FILE_PATH = "src/trainFiles/train1.txt";
+    //static final String INPUT_FILE_PATH = "src/trainFiles/train2.txt";
+    //static final String INPUT_FILE_PATH = "src/trainFiles/train3.txt";
+    //static final String INPUT_FILE_PATH = "src/trainFiles/sample1-22.txt";
+    //static final String INPUT_FILE_PATH = "src/trainFiles/sample2-22.txt";
+    static final String INPUT_FILE_PATH = "src/trainFiles/sample3-22.txt";
+    //static final String INPUT_FILE_PATH = "src/trainFiles/sample4-22.txt";
     public static void main(String[] args) {
         long startTime = System.nanoTime();//Start time
         int[][] cities = input();//Get the cities from the file
@@ -324,7 +324,7 @@ public class Main {
     static int[][] input(){//Get the cities from the file and return them in a 2d array
         Scanner input = null;//Initialize the scanner
         int count_of_cities = 0;//Initialize the count of cities to 0
-        File file = new File(INPUT_FILE_NAME);//Initialize the file to read from
+        File file = new File(INPUT_FILE_PATH);//Initialize the file to read from
         int[][] cities;//Initialize the cities 2d array
         String lines="";//Initialize the lines string to store the file contents in a string
         try {
