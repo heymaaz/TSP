@@ -31,8 +31,8 @@ public class Main {
     static final int GENERATION_LIMIT_FOR_BIG_CITY = 150; //For the generation limit to stop the algorithm for big cities (city lenght greater than 30)
     static final int GENERATION_LIMIT = 1000000;//For the generation limit of 1,000,000 to stop the algorithm
     
-    static final int NUMBER_OF_POPULATIONS = 2;//For the train and first 3 test files make this 5, for the fourth test file make this 2
-    static final boolean STOP_EARLY = true;//MAKE THIS TRUE FOR THE FOURTH TEST FILE
+    static final int NUMBER_OF_POPULATIONS = 5;//For the train and first 3 test files make this 5, for the fourth test file make this 2
+    static final boolean STOP_EARLY = false;//MAKE THIS TRUE FOR THE FOURTH TEST FILE
 
     //Uncomment the input file you want to run or add the path to the file you want to run
     //static final String INPUT_FILE_NAME = "C:\\Users\\mc2098\\eclipse-workspace\\Coursework 1\\src\\trainFiles/train1.txt";
@@ -41,7 +41,7 @@ public class Main {
     //static final String INPUT_FILE_NAME = "C:\\Users\\mc2098\\eclipse-workspace\\Coursework 1\\src\\trainFiles/sample1-22.txt";
     //static final String INPUT_FILE_NAME = "C:\\Users\\mc2098\\eclipse-workspace\\Coursework 1\\src\\trainFiles/sample2-22.txt";
     //static final String INPUT_FILE_NAME = "C:\\Users\\mc2098\\eclipse-workspace\\Coursework 1\\src\\trainFiles/sample3-22.txt";
-    static final String INPUT_FILE_NAME = "src/trainFiles/sample4-22.txt";
+    static final String INPUT_FILE_NAME = "src/trainFiles/sample3-22.txt";
     public static void main(String[] args) {
         long startTime = System.nanoTime();//Start time
         int[][] cities = input();//Get the cities from the file
@@ -208,7 +208,9 @@ public class Main {
                     mutate(population[populationIndex],fitness[populationIndex],TOP_IF_NOT_BEST);//Mutate the population by swapping 3 cities from the top {TOP_IF_NOT_BEST} paths
                 }
             }
-            displayGeneration(generation++,bestDistance,countOfAgreeingPopulations);//Display the generation, best distance, and number of agreeble contenders
+            generation++;
+            //if(!STOP_EARLY)//Uncomment to display the generation, best distance, and number of agreeble contenders
+            //    displayGeneration(generation,bestDistance,countOfAgreeingPopulations);//Display the generation, best distance, and number of agreeble contenders
             if(STOP_EARLY&&generation>GENERATION_LIMIT_FOR_BIG_CITY){//If the number of cities is big then stop the algorithm early
                 ifStop="Stopped because of generation limit of "+GENERATION_LIMIT_FOR_BIG_CITY+" reached for city lenght:"+cities.length+".\n";
                 break;
