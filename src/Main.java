@@ -209,7 +209,7 @@ public class Main {
                 }
             }
             generation++;
-            //if(!STOP_EARLY)//Uncomment to display the generation, best distance, and number of agreeble contenders
+            //if(!STOP_EARLY)//Uncomment to display the generation, best distance, and number of agreeble contenders for debugging purposes
             //    displayGeneration(generation,bestDistance,countOfAgreeingPopulations);//Display the generation, best distance, and number of agreeble contenders
             if(STOP_EARLY&&generation>GENERATION_LIMIT_FOR_BIG_CITY){//If the number of cities is big then stop the algorithm early
                 ifStop="Stopped because of generation limit of "+GENERATION_LIMIT_FOR_BIG_CITY+" reached for city lenght:"+cities.length+".\n";
