@@ -18,6 +18,7 @@ public class Main {
     static double[][] distanceMatrix;//For the adjacency matrix to store the distance between each city (to not have to calculate the distance between each city every time it is needed)
     static final int POWER_OF_TWO = 2;//For the x^2 y^2 in the distance formula
     static final int ROUND_TO_FOUR_PLACES = 4;//For the number of decimal places to round to
+    static final int BASE_10 = 10;//For the base 10
     static final int BEST_FITNESS_INDEX = 0;//For the best fitness value (distance)
     static final int CITY_COLUMN_LENGHT = 3;//For the number of columns in the cities 2d array
     static final int CITY_ID = 0;//For the city id
@@ -184,13 +185,12 @@ public class Main {
         for(int populationIndex = 0; populationIndex<NUMBER_OF_POPULATIONS; populationIndex++)//For each population
             sort(population[populationIndex], fitness[populationIndex]);//Sort the population by fitness (distance
         int generation = 0;//to keep track of the generation
-        boolean dontStop = true;//Flag to stop the algorithm
         String ifStop = "";//To display why the algorithm stopped
-        return geneticAlgo(cities, population, fitness, bestPath, bestDistance, generation, dontStop, ifStop);//Run the genetic algorithm
+        return geneticAlgo(cities, population, fitness, bestPath, bestDistance, generation, ifStop);//Run the genetic algorithm
      }
-     static double geneticAlgo(int[][] cities, int[][][] population, double[][] fitness, int[] bestPath, double bestDistance, int generation, boolean dontStop, String ifStop){
+     static double geneticAlgo(int[][] cities, int[][][] population, double[][] fitness, int[] bestPath, double bestDistance, int generation, String ifStop){
         int countOfAgreeingPopulations=0;//To keep track of how many contenders agree
-        while(dontStop && countOfAgreeingPopulations!=population.length){
+        while(countOfAgreeingPopulations!=population.length){
             countOfAgreeingPopulations=0;//Reset the count of agreeble contenders
             bestDistance =fitness[min(fitness)][BEST_FITNESS_INDEX];//Get the best distance from all the populations
             for(int populationIndex = 0; populationIndex<population.length; populationIndex++){//For each population
@@ -199,7 +199,7 @@ public class Main {
                     mutate(population[populationIndex],fitness[populationIndex],TOP_IF_BEST);//Mutate the population by swapping 3 cities from the top {TOP_IF_BEST} paths
                 }
                 else{
-                    if(generation%REINITIALISE_POPULATION_AT==(REINITIALISE_POPULATION_AT-1))//Every 1000 generations, reinitialize the population and fitness 
+                    if(generation%REINITIALISE_POPULATION_AT==(REINITIALISE_POPULATION_AT-1))//Every {REINITIALISE_POPULATION_AT} generations, reinitialize the population and fitness 
                     {
                         initPopulation(population[populationIndex]);//Reinitialize the population
                         initFitness(fitness[populationIndex],population[populationIndex]);//Reinitialize the fitness
@@ -210,12 +210,12 @@ public class Main {
             }
             displayGeneration(generation++,bestDistance,countOfAgreeingPopulations);//Display the generation, best distance, and number of agreeble contenders
             if(STOP_EARLY&&generation>GENERATION_LIMIT_FOR_BIG_CITY){//If the number of cities is big then stop the algorithm early
-                dontStop=false;
                 ifStop="Stopped because of generation limit of "+GENERATION_LIMIT_FOR_BIG_CITY+" reached for city lenght:"+cities.length+".\n";
+                break;
             }
             if(generation>GENERATION_LIMIT){//If the generation is greater than GENERATION_LIMIT, stop the algorithm
-                dontStop=false;
                 ifStop="Stopped because of generation limit of "+GENERATION_LIMIT+" reached.\n";
+                break;
             }
         }
         bestPath = population[min(fitness)][0];//Get the best path from the populations
@@ -232,10 +232,10 @@ public class Main {
          * The fitness is recalculated for the mutated path
          * The population is sorted by fitness
          */
-        for(int populationIndex = top; populationIndex<population.length; populationIndex++){//For the rest of the population (after the top paths)
-            int[] child = new int[population[populationIndex%top].length];//Create a child path from the top paths
-            for (int childIndex = 0; childIndex < child.length; childIndex++) {
-                child[childIndex]= population[populationIndex%top][childIndex];
+        for(int pathIndex = top; pathIndex<population.length; pathIndex++){//For the rest of the population (after the top paths)
+            int[] child = new int[population[pathIndex%top].length];//Create a child path from the top paths
+            for (int cityIndex = 0; cityIndex < child.length; cityIndex++) {
+                child[cityIndex]= population[pathIndex%top][cityIndex];
             }
             int random = 1+(int)(Math.random() * (child.length-1));//1 to child.length-1 so that start city is not swapped
             int random2 = 1+(int)(Math.random() * (child.length-1));
@@ -244,9 +244,9 @@ public class Main {
             child[random] = child[random2];
             child[random2] = child[random3];
             child[random3] = temp;
-            fitness[populationIndex] = distance(child);//Calculate the fitness of the child path
-            for (int childIndex = 0; childIndex < child.length; childIndex++) {//Replace the population path with the mutated child path
-                population[populationIndex][childIndex] = child[childIndex];
+            fitness[pathIndex] = distance(child);//Calculate the fitness of the child path
+            for (int cityIndex = 0; cityIndex < child.length; cityIndex++) {//Replace the population path with the mutated child path
+                population[pathIndex][cityIndex] = child[cityIndex];
             }
             
         }
@@ -306,7 +306,7 @@ public class Main {
          */
         if (places < 0) throw new IllegalArgumentException();//If the places is less than 0, throw an exception
     
-        long factor = (long) Math.pow(10, places);//Get the factor to multiply by to get the desired decimal places
+        long factor = (long) Math.pow(BASE_10, places);//Get the factor to multiply by to get the desired decimal places
         value = value * factor;//Multiply the value by the factor
         long tmp = Math.round(value);//Round to the nearest integer value
         return (double) tmp / factor;//Divide by the factor to get the desired decimal places
