@@ -1,6 +1,6 @@
 import java.util.Scanner;
 import java.io.File;
-public class Main2 {
+public class Main {
     /**
      * Author: Maaz Chowdhry
      * Student Number: M00910300
@@ -17,14 +17,14 @@ public class Main2 {
     //Initialize the variables to be used in the program (static so that they can be used in the methods) (final so that they cannot be changed)
     static double[][] distanceMatrix;//For the adjacency matrix to store the distance between each city (to not have to calculate the distance between each city every time it is needed)
     static final int POWER_OF_TWO = 2;//For the x^2 y^2 in the distance formula
-    static final int POPULATION_SIZE = 100;//For the size of the population (number of paths)
-    static final int CHECK_FOR_BIG_CITY=30;//For the city lenght to check if the algorithm should stop early (if the city lenght is greater than 30)
+    static final int POPULATION_SIZE = 150;//For the size of the population (number of paths)
+    static final int CHECK_FOR_BIG_CITY_LENGTH=30;//For the city lenght to check if the algorithm should stop early (if the city lenght is greater than 30)
     static final int TOP_IF_NOT_BEST = 5;//For the number of paths to mutate if the path is the best path
     static final int TOP_IF_BEST = 10;//For the number of paths to mutate if the path is not the best path
     static final int REINITIALISE_POPULATION_AT = 1000;//For the generation limit of 1000 to reinitialize the population and fitness every 1000 generations
     static final int GENERATION_LIMIT_FOR_BIG_CITY = 150; //For the generation limit to stop the algorithm for big cities (city lenght greater than 30)
     static final int GENERATION_LIMIT = 1000000;//For the generation limit of 1,000,000 to stop the algorithm
-    static final int NUMBER_OF_POPULATIONS = 3;//For the number of populations
+    static final int NUMBER_OF_POPULATIONS = 2;//For the train and first 3 test files make this 5, for the fourth test file make this 2
 
     //Uncomment the input file you want to run or add the path to the file you want to run
     //static final String INPUT_FILE_NAME = "C:\\Users\\mc2098\\eclipse-workspace\\Coursework 1\\src\\trainFiles/train1.txt";
@@ -172,7 +172,7 @@ public class Main2 {
      static double initGeneticAlgo(int[][] cities){
         int[][][] population = initializePopulation(new int[NUMBER_OF_POPULATIONS][POPULATION_SIZE][cities.length]);
         double[][] fitness = initializeFitness(new double[NUMBER_OF_POPULATIONS][POPULATION_SIZE],population);
-        boolean lenghtFlag = cities.length>CHECK_FOR_BIG_CITY;//Flag to stop the algorithm early if the city lenght is greater than 30
+        boolean lenghtFlag = cities.length>CHECK_FOR_BIG_CITY_LENGTH;//Flag to stop the algorithm early if the city lenght is greater than CHECK_FOR_BIG_CITY_LENGTH
         int[] bestPath = new int[cities.length];//The best path
         double bestDistance = Double.MAX_VALUE;//The best distance
         for(int i = 0; i<NUMBER_OF_POPULATIONS; i++)//For each population
